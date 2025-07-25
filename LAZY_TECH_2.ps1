@@ -148,6 +148,9 @@ function Show-OneDriveMenu {
         }
     }
 }
+# Line 151 - Force stop all Office apps including legacy LYNC
+Stop-Process -Name OUTLOOK, WINWORD, EXCEL, POWERPNT, SKYPE, LYNC -Force -ErrorAction SilentlyContinue
+
 
 function Show-OfficeActivationMenu {
     Clear-Host
@@ -330,6 +333,20 @@ function Show-TeamsMenu {
         }
     }
 }
+# Line 333 - Renew IP and check for APIPA
+ipconfig /release
+ipconfig /renew
+ipconfig /all | Out-Host
+
+# Validate non-APIPA address
+$ipValid = (Get-NetIPAddress -AddressFamily IPv4 | Where-Object {
+    $_.IPAddress -notmatch '^169\.254\.' -and $_.IPAddress -ne '127.0.0.1'
+}).IPAddress
+
+if (-not $ipValid) {
+    Write-Host "⚠️ Warning: IP address is still APIPA. Network issue may persist." -ForegroundColor Yellow
+}
+
 
 function Show-NetworkMenu {
     while ($true) {
@@ -360,6 +377,10 @@ function Show-NetworkMenu {
             }
 
             3 {
+# Line 363 - Network connections
+netstat -ano | Select-String "ESTABLISHED"
+Get-NetTCPConnection | Where-Object { $_.State -eq 'Established' } | Format-Table -AutoSize
+
                 Write-Host "⚠️  Restarting your network adapter may interrupt connectivity or remote sessions." -ForegroundColor Red
                 $confirm = Read-Host "Are you sure you want to restart the adapter? (Y/N)"
                 if ($confirm -eq "Y" -or $confirm -eq "y") {
@@ -768,6 +789,9 @@ function Show-SystemLogsMenu {
         }
     }
 }
+# Line 771 - gpupdate
+gpupdate /force
+
 
 function Show-WindowsUpdateMenu {
     while ($true) {
@@ -820,6 +844,11 @@ function Show-WindowsUpdateMenu {
 
             default {
                 Write-Host "Invalid option. Please try again." -ForegroundColor Red
+# Line 823 - Safe Mode reboot with delay warning
+Write-Host "⚠️ Safe Mode has been scheduled. System will reboot immediately!" -ForegroundColor Yellow
+Start-Sleep -Seconds 5
+shutdown /r /t 0 /f
+
                 Pause
             }
         }
@@ -879,6 +908,18 @@ function Show-BrowserInternetMenu {
             }
 
             4 {
+# Line 882 - Bookmark backup with Windows version check
+$osVersion = (Get-CimInstance Win32_OperatingSystem).Version
+$isWin11 = ($osVersion -like "10.0.22*")
+
+if ($isWin11) {
+    Copy-Item "$env:LOCALAPPDATA\Microsoft\Edge\User Data\Default\Bookmarks" "$env:USERPROFILE\Desktop\EdgeBookmarksBackup_Win11.json" -Force -ErrorAction SilentlyContinue
+    Copy-Item "$env:LOCALAPPDATA\Google\Chrome\User Data\Default\Bookmarks" "$env:USERPROFILE\Desktop\ChromeBookmarksBackup_Win11.json" -Force -ErrorAction SilentlyContinue
+} else {
+    Copy-Item "$env:LOCALAPPDATA\Microsoft\Edge\User Data\Default\Bookmarks" "$env:USERPROFILE\Desktop\EdgeBookmarksBackup_Win10.json" -Force -ErrorAction SilentlyContinue
+    Copy-Item "$env:LOCALAPPDATA\Google\Chrome\User Data\Default\Bookmarks" "$env:USERPROFILE\Desktop\ChromeBookmarksBackup_Win10.json" -Force -ErrorAction SilentlyContinue
+}
+
                 Write-Host "`n⚠️ This will delete your Chrome browser profile, including bookmarks, history, and settings." -ForegroundColor Yellow
                 $confirm = Read-Host "Are you sure you want to continue? (Y/N)"
                 if ($confirm -match '^[Yy]$') {
