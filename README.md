@@ -1,125 +1,74 @@
-Here’s the updated README for **LAZY TECH 2** with your 2.0 patches baked in:
+# LAZY TECH 2 – PowerShell GUI Helpdesk Toolkit
+
+## About
+
+**LAZY TECH 2** is a modular Windows PowerShell toolkit designed for Microsoft 365 environments and general IT troubleshooting.  
+All classic text-menu scripts have been modernized with easy, clickable GUIs for actual helpdesk, techs, and end users.
+
+**Author:** Cypher Playfair  
+**Contributors:** Kingworm, OpenAI ChatGPT
 
 ---
 
-🛠️ **LAZY TECH 2** – PowerShell Helpdesk Toolkit
-**Author:** Kyle Martin
-**Version:** 2.0
+## Features
 
-**Platform:** Windows PowerShell (Run as Admin)
+- **Clickable GUI for Every Module**  
+  All core helpdesk scripts (Outlook, OneDrive, Teams, Printers, Windows Update, Network, Browsers, and more) are now fully interactive. No more typing numbers—just click the button and get feedback.
 
----
+- **Error Handling & Status Feedback**  
+  Every critical operation is wrapped in try/catch. Status labels and output windows show you exactly what happened, success or failure.
 
-## 💡 What Is It?
+- **User Data Safety & Migration**
+  - Outlook: Migrate signatures, fix send/receive, create & set new profiles.
+  - Edge/Chrome: One-click bookmark backup and profile reset with warnings.
 
-LAZY TECH 2 is for every tech who's ever said:
+- **Common Troubleshooting, One Click Away**
+  - Outlook: Safe mode, clear temp, repair.
+  - OneDrive: Reset, restart, open logs.
+  - Teams: Full cache clear, kill/restart, error logs.
+  - Printers: Restart spooler, list printers, clear jobs.
+  - Network: Release/renew, traceroute/ping/arp/DNS, test ports, see progress.
+  - Windows Update: Scan, view, clear cache.
+  - Browsers: Backup/restore, full profile reset.
 
-> “Why do I need to click through 5 different settings windows just to fix Outlook?”
-> “Why can’t there just be a menu for all the usual crap I deal with?”
-> “I’m not typing 10 PowerShell commands—I just want to fix it.”
-
-This toolkit is your escape hatch from endless clicking, command memorization, and hunting through the Control Panel. It gives you a clean PowerShell menu to handle the most common and annoying Windows issues in just a few keystrokes.
-
-You run the script, pick a number, fix the issue. Done.
-
----
-
-## 🚀 Quick Start
-
-```powershell
-git clone https://github.com/sudocod3r/LAZY_TECH_2.git  
-cd LAZY_TECH_2  
-.\LAZY_TECH_2.ps1
-```
-
-> ✅ Don’t forget to right‑click → **Run with PowerShell** or launch it in an elevated terminal.
+- **Modern PowerShell Compatibility**
+  - Removed deprecated syntax (ternaries, old color props, etc.).
+  - Works with modern Windows 10/11 PowerShell and does not hang the GUI.
+  - All actions display progress and handle errors visually.
 
 ---
 
-## 📋 Menu Breakdown
+## How To Use
 
-```
-==== LAZY TECH 2 ====
-
-1. Outlook Issues
-2. OneDrive Issues
-3. Office Activation & Licensing
-4. Login / Auth / MFA
-5. Teams Issues
-6. Network / Connectivity
-7. Devices & Printers
-8. User Profiles & Accounts
-9. Startup & Performance
-10. System Recovery Tools
-11. System Logs & Events
-12. Windows Update Tools
-13. Browser & Internet Issues
-14. Helpdesk Profile Info
-15. Exit
-```
-
-Each number opens a sub‑menu of one‑click tools and diagnostics. No typing. No registry diving. No random forum advice.
+1. **Download or copy the .ps1 files** for the modules you want.
+2. **Open PowerShell as Administrator** (recommended for most modules).
+3. **Import or run the module** (e.g., `Show-OutlookMenu-GUI`).
+4. **Click buttons for each troubleshooting action**—output and errors will appear live in the GUI.
+5. **To extend:** Copy-paste any included module template and swap code for new tools.
 
 ---
 
-## ✅ What It Can Do
+## Collaboration & Credits
 
-* 📨 **Outlook** – Rebuild profiles, clear cache, reopen clean
-* ☁️ **OneDrive** – Fix sync issues, relaunch stuck clients
-* 💼 **Office Licensing** – Diagnose, reset, and rearm activations
-* 🔐 **MFA / Login** – Triage sign‑in problems with local or M365 accounts
-* 📞 **Teams** – Clear cache, restart services, fix basic comms
-* 🌐 **Network** – Flush DNS, reset adapters, ping tests, etc.
-* 🖨️ **Printers** – Clear spooler, reset print services
-* 👤 **Profiles** – Reset temp logins, check user folder issues
-* 🚀 **Performance** – Disable startup junk, clean temp files
-* 🧰 **Recovery** – One‑click access to restore and repair tools
-* 📑 **Logs** – Shortcut to Event Viewer logs and filtering
-* 🔄 **Updates** – Kick off stalled updates, reset components
-* 🌍 **Browser Issues** – DNS errors, SSL problems, and cache nukes
-* 🧾 **Helpdesk Info** – Pull quick system/user info for tickets
+- **Original scripts & design:** Cypher Playfair (Playfair/Cypher/Jalena)
+- **GUI refactor, debugging:** Playfair + Kingworm
+- **Realtime co-dev:** Discord, ChatGPT, message.txt
 
 ---
 
-## 🛠️ What’s New in 2.0?
+## Future Plans
 
-1. **Line 151** – Force‑kills all Office apps (Outlook, Word, Excel, PowerPoint), plus Skype & legacy Lync before any repair to avoid file locks.
-2. **Line 333** – Automates IP stack reset (`ipconfig /release` & `/renew` + full `ipconfig /all`), then checks for APIPA (169.254.x.x) and warns if still using it.
-3. **Line 363** – Adds live socket inspection: classic `netstat -ano` for ESTABLISHED connections and a PowerShell native `Get‑NetTCPConnection` view.
-4. **Line 771** – Runs `gpupdate /force` to immediately apply any pending Group Policy changes.
-5. **Line 823** – Schedules a Safe Mode reboot with a clear warning, a 5‑second delay (allowing cancellation), and a forced restart.
-6. **Line 882** – Backs up Chrome & Edge bookmarks to the Desktop, auto‑detecting Windows 10 vs. 11 to name the backup files accordingly.
+- Package as a single main launcher (all modules in one window)
+- Add more progress bars & logs
+- Auto-backup user data before destructive changes
+- Optional: Compile to EXE for deployment
 
 ---
 
-## ⚙️ How to Use It
-
-1. **Clone** or download the script
-2. Right‑click → **Run with PowerShell** (or launch from an Admin terminal)
-3. Select your issue from the menu
-4. Fix it without thinking
-
-You don’t need to memorize syntax or dig through Control Panel—the script does the boring stuff for you.
+> LAZY TECH 2 makes Windows troubleshooting actually usable for techs, power users, and regular folks alike.
+>
+> Have ideas, bugs, or want to collab?  
+> Ping **Playfair** (Cypher Playfair) on Discord!
 
 ---
 
-## 🧪 Requirements
-
-* Windows 10 or 11
-* PowerShell 5.1+
-* Must be run **as Administrator**
-* Internet connection for update/license fixes
-
----
-
-## 📖 License
-
-MIT License – Free to use, fork, and modify. Not for resale.
-
----
-
-🧠 Made By
-**Kyle Martin – Squid Tech Services**
-🔗 [https://sudocod3r.github.io/](https://sudocod3r.github.io/)
-
-> “\$i11y U53R, T0015 AR3 4 ADM1N5.”
