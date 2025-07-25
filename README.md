@@ -26,8 +26,8 @@ All classic text-menu scripts have been modernized with easy, clickable GUIs for
   - Outlook: Safe mode, clear temp, repair.
   - OneDrive: Reset, restart, open logs.
   - Teams: Full cache clear, kill/restart, error logs.
-  - Printers: Restart spooler, list printers, clear jobs.
-  - Network: Release/renew, traceroute/ping/arp/DNS, test ports, see progress.
+  - Printers: Restart spooler, list printers, clear jobs. TBD
+  - Network: Release/renew, traceroute/ping/arp/DNS, test ports, see progress. TBD
   - Windows Update: Scan, view, clear cache.
   - Browsers: Backup/restore, full profile reset.
 
